@@ -14,14 +14,14 @@
     "check:tokens": "node ../design-software-design-system/scripts/check-consumer-tokens.mjs --consumer iam-mfe"
   },
   "dependencies": {
-    "@sena/design-system": "file:../design-software-design-system",
+    "@sena/design-system": "file:../../design-software-design-system-develop",
     "lucide-react": "^0.468.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
-    "@sena/frontend-platform": "file:../design-software-frontend-platform",
+    "@sena/frontend-platform": "file:../../platform/design-software-frontend-platform-develop",
     "@eslint/js": "^10.0.1",
     "@module-federation/vite": "^1.23.0",
     "@testing-library/react": "^16.3.3",

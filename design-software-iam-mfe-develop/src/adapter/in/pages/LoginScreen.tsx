@@ -31,8 +31,8 @@ export function LoginScreen({
     try {
       const response = await login(identifier.trim(), password);
       const redirect = getTemporaryPasswordRedirect({
-        temporaryPasswordRequired: response.data?.temporaryPasswordRequired,
-        resetToken: response.data?.resetToken
+        temporaryPasswordRequired: response.temporaryPasswordRequired ?? response.data?.temporaryPasswordRequired,
+        resetToken: response.resetToken ?? response.data?.resetToken
       });
 
       if (redirect) {
@@ -41,6 +41,12 @@ export function LoginScreen({
         return;
       }
 
+      if (!response.access_token) {
+        throw new Error("IAM no devolvió un token de acceso válido.");
+      }
+
+      sessionStorage.setItem("sena.access_token", response.access_token);
+      window.dispatchEvent(new Event("sena:session-created"));
       onNotice({
         kind: "success",
         message: "Inicio de sesión correcto. El shell puede continuar con la ruta privada."
