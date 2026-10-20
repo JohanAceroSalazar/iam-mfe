@@ -61,7 +61,7 @@ describe("Auth API adapter password reset", () => {
     expect(fetchMock).toHaveBeenCalledWith(
       "/auth/login",
       expect.objectContaining({
-        body: JSON.stringify({ identifier: "qa.user", password: "TestPassword1!" }),
+        body: JSON.stringify({ email: "qa.user", password: "TestPassword1!" }),
         method: "POST"
       })
     );

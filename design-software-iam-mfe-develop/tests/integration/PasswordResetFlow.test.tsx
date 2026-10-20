@@ -42,7 +42,7 @@ describe("HU-IAM-014 password reset flow", () => {
 
   it("authenticates through the login endpoint", async () => {
     window.history.replaceState(null, "", "/login");
-    fetchMock.mockResolvedValue(response(200, { data: {} }));
+    fetchMock.mockResolvedValue(response(200, { access_token: "test-access-token" }));
 
     render(<App />);
     fireEvent.change(screen.getByLabelText("Correo o usuario"), {
@@ -54,10 +54,11 @@ describe("HU-IAM-014 password reset flow", () => {
     fireEvent.click(screen.getByRole("button", { name: "Ingresar" }));
 
     expect((await screen.findByRole("status")).textContent).toContain("Inicio de sesión correcto.");
+    expect(sessionStorage.getItem("sena.access_token")).toBe("test-access-token");
     expect(fetchMock).toHaveBeenCalledWith(
       "/auth/login",
       expect.objectContaining({
-        body: JSON.stringify({ identifier: "qa.user", password: "TestPassword1!" })
+        body: JSON.stringify({ email: "qa.user", password: "TestPassword1!" })
       })
     );
   });

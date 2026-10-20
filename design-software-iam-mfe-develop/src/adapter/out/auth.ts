@@ -10,8 +10,8 @@ export type ApiEnvelope<T = unknown> = {
 const API_BASE_URL = import.meta.env.VITE_IAM_API_URL ?? "";
 
 export type LoginResponse = {
-  accessToken?: string;
-  refreshToken?: string;
+  access_token?: string;
+  refresh_token?: string;
   user?: {
     id: string;
     name?: string;
@@ -78,8 +78,8 @@ export function confirmPasswordReset(token: string, password: string) {
 }
 
 export function login(identifier: string, password: string) {
-  return post<{ identifier: string; password: string }, LoginResponse>("/auth/login", {
-    identifier,
+  return post<{ email: string; password: string }, LoginResponse>("/auth/login", {
+    email: identifier,
     password
-  });
+  }) as Promise<LoginResponse & ApiEnvelope<LoginResponse>>;
 }
